@@ -1,0 +1,23 @@
+{
+  "CLASS_VALIDATION": {
+    "DICTIONARY": {
+      "BAD_NAME": "The name contains forbidden characters",
+      "DUPLICATED_NAME": "This dictionary name already exist!"
+    },
+    "BOOLEAN": {
+      "BAD_FORMAT": "The input doesn't match a boolean(true or false)."
+    },
+    "NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a number format.",
+      "START_WITH_PLUS_SIGN": "Ignore the '+' sign for positive numbers.",
+      "TOO_MUCH_DECIMALS": "Only 2 decimals are allowed.",
+      "UNNECESSARY_ZEROS": "Avoid unnecessary zeros."
+    },
+    "RULE_OBJECT_TYPE": {
+      "INVALID_TYPE": "This is not a valid RuleObjectType."
+    },
+    "STRING": {
+      "BAD_FORMAT": "This string has forbiden characters!"
+    }
+  }
+}

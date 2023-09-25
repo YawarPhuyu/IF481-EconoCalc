@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col" [formGroup]="form_group">
+      <app-input-field
+        formControlName="capital"
+        [required]="true"
+        [icon]="'paid'"
+        [label]="'Capital'"
+        [type]="'number'"
+      >
+      </app-input-field>
+      <app-input-field
+        formControlName="interest"
+        [required]="true"
+        [icon]="'percent'"
+        [label]="'Interés'"
+        [type]="'number'"
+      >
+      </app-input-field>
+      <app-input-field
+        formControlName="lapses"
+        [required]="true"
+        [icon]="'timelapse'"
+        [label]="'Periodos'"
+        [type]="'number'"
+      >
+      </app-input-field>
+    </div>
+
+    <div class="col">
+
+    </div>
+  </div>
+</div>

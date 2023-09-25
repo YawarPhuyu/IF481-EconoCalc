@@ -1,1 +1,13 @@
-<div>some content here</div>
+<mat-drawer-container autosize>
+  <mat-drawer #leftDrawer position="start" mode="side" >
+    some drawer contetn
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+    <button
+      (click)="leftDrawer.toggle()"
+    >
+      toggle sidenav!
+    </button>
+  </mat-drawer-content>
+</mat-drawer-container>

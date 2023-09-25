@@ -1,0 +1,10 @@
+<mat-form-field 
+  appearance="fill"
+  [matTooltip]="errors_tooltip? errors_tooltip : place_holder"
+  [matTooltipClass]="{'invalid-matToolTip': errors_tooltip}"
+>
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <input [(ngModel)]="user_input" (input)="onChange(user_input)" matInput placeholder="Capital">
+  <mat-icon class="material-symbols-outlined" matSuffix *ngIf="icon">{{ icon }}</mat-icon>
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+</mat-form-field>
