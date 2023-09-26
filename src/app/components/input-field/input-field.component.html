@@ -1,10 +1,30 @@
-<mat-form-field 
+<mat-form-field
+  #tooltip="matTooltip"
   appearance="fill"
-  [matTooltip]="errors_tooltip? errors_tooltip : place_holder"
-  [matTooltipClass]="{'invalid-matToolTip': errors_tooltip}"
+  [ngClass]="{'invalid-form-field': errors_tooltip}"
+  [color]="errors_tooltip? 'warn' : 'primary'"
+  [matTooltip]="errors_tooltip || place_holder"
+  matTooltipPosition="right"
+  [matTooltipClass]="{'invalid-matToolTip': errors_tooltip != null}"
 >
   <mat-label *ngIf="label">{{ label }}</mat-label>
-  <input [(ngModel)]="user_input" (input)="onChange(user_input)" matInput placeholder="Capital">
+  <ng-container *ngIf="!option_list; else selectField">
+    <input [(ngModel)]="user_input" (input)="onChange(user_input)" matInput>
+  </ng-container>
+  <ng-template #selectField>
+    <mat-select
+      [(ngModel)]="user_input"
+      name="op"
+      (selectionChange)="onChange(user_input);"
+    >
+      <mat-option
+        *ngFor="let op of option_list"
+        [value]="op"
+      >
+        {{ op }}
+      </mat-option>
+    </mat-select>
+  </ng-template>
   <mat-icon class="material-symbols-outlined" matSuffix *ngIf="icon">{{ icon }}</mat-icon>
   <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
 </mat-form-field>

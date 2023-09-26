@@ -1,5 +1,9 @@
 {
   "CLASS_VALIDATION": {
+    "GENERAL": {
+      "FIELD_REQUIRED": "This fiels is required",
+      "INVALID_FIELDS_EXIST": "Some fields are invalid"
+    },
     "DICTIONARY": {
       "BAD_NAME": "The name contains forbidden characters",
       "DUPLICATED_NAME": "This dictionary name already exist!"
@@ -19,5 +23,25 @@
     "STRING": {
       "BAD_FORMAT": "This string has forbiden characters!"
     }
+  },
+  "FREQUENCIES": {
+    "YEARLY": "annually",
+    "MONTHLY": "monthly",
+    "WEEKLY": "weekly",
+    "DAILY": "daily"
+  },
+  "MESSAGES": {
+    "DATALESS_TABLE": "This table has no data yet"
+  },
+  "LABELS": {
+    "CAPITAL": "Capital",
+    "CALCULATE": "Calculate",
+    "FUTURE_VALUE": "Future value",
+    "INTEREST": "Interest",
+    "INTEREST_RATE": "Interest rate",
+    "PERIOD": "Period",
+    "PERIODS": "Periods",
+    "FREQUENCY": "Frequency",
+    "FREQUENCIES": "Frequencies"
   }
 }

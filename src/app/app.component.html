@@ -1,13 +1,16 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button
+  (click)="leftDrawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>IF481 - EconoCalculator</span>
+</mat-toolbar>
+
 <mat-drawer-container autosize>
   <mat-drawer #leftDrawer position="start" mode="side" >
     some drawer contetn
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
-    <button
-      (click)="leftDrawer.toggle()"
-    >
-      toggle sidenav!
-    </button>
   </mat-drawer-content>
 </mat-drawer-container>

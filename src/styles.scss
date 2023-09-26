@@ -8,3 +8,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: white;
   background-color: rgba(255, 0, 0, 1);
 }
+
+mat-icon {
+  color: primary;
+}
+
+.invalid-form-field,
+.invalid-form-field mat-icon,
+.invalid-form-field mat-label {
+  color: red;
+  border-color: red;
+}

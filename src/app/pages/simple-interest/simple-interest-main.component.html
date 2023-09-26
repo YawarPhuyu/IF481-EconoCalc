@@ -1,34 +1,81 @@
 <div class="container">
   <div class="row">
-    <div class="col" [formGroup]="form_group">
+    <div class="col d-flex flex-column align-items-center justify-content-start" [formGroup]="form_group">
       <app-input-field
         formControlName="capital"
         [required]="true"
         [icon]="'paid'"
-        [label]="'Capital'"
+        [label]="'LABELS.CAPITAL' | translate"
         [type]="'number'"
-      >
-      </app-input-field>
+      ></app-input-field>
+
       <app-input-field
-        formControlName="interest"
+        formControlName="interest_rate"
         [required]="true"
         [icon]="'percent'"
-        [label]="'Interés'"
+        [label]="'LABELS.INTEREST_RATE' | translate"
         [type]="'number'"
-      >
-      </app-input-field>
+      ></app-input-field>
+
       <app-input-field
-        formControlName="lapses"
+        formControlName="periods"
+        [required]="true"
+        [icon]="'update'"
+        [label]="'LABELS.PERIODS' | translate"
+        [type]="'number'"
+      ></app-input-field>
+
+      <app-input-field
+        formControlName="frequency"
         [required]="true"
         [icon]="'timelapse'"
-        [label]="'Periodos'"
-        [type]="'number'"
-      >
-      </app-input-field>
+        [label]="'LABELS.FREQUENCY' | translate"
+        [option_list]="frequencies"
+      ></app-input-field>
+
+      <button
+      mat-raised-button
+      [color]="form_group.valid? 'primary' : 'warn'" 
+      (click)="calculateTable()"
+      [matTooltip]="form_group.invalid? ('CLASS_VALIDATION.GENERAL.INVALID_FIELDS_EXIST' | translate) : ''"
+      matTooltipPosition="right">
+        {{ 'LABELS.CALCULATE' | translate }}
+      </button>
     </div>
 
     <div class="col">
+      <table mat-table
+      class="w-100"
+      [dataSource]="table_data">
+        <ng-container matColumnDef="period">
+          <th mat-header-cell *matHeaderCellDef>{{ "LABELS.PERIOD" | translate }} (n)</th>
+          <td mat-cell *matCellDef="let element">{{ element.period }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef>{{ "LABELS.INTEREST" | translate}} (I)</th>
+          <td mat-cell *matCellDef="let element">{{ element.interest | number: '1.2-2' }}</td>
+        </ng-container>
 
+        <ng-container matColumnDef="future_value">
+          <th mat-header-cell *matHeaderCellDef>{{ 'LABELS.FUTURE_VALUE' | translate }} (F)</th>
+          <td mat-cell *matCellDef="let element">{{ element.future_value | number: '1.2-2' }}</td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="columns_to_show"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns_to_show"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="columns_to_show.length">
+            {{ "MESSAGES.DATALESS_TABLE" | translate}}
+          </td>
+        </tr>
+      </table>
+      <mat-paginator
+      #paginator
+      [pageSize]="7"
+      [pageSizeOptions]="[3, 7, 15, 30, 60, 120]"
+      [showFirstLastButtons]="true"
+      ></mat-paginator>
     </div>
   </div>
 </div>

@@ -34,7 +34,7 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
   translate_sub$?: Subscription;
   update_errors_sub$?: Subscription;
 
-  user_input: string = "";
+  user_input: any = null;
   disabled: boolean = false;
   focused: boolean = false;
   input_type: string = "";

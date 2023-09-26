@@ -3,11 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Material modules
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -28,11 +33,16 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
   ],
   imports: [
     // Material modules
+    MatToolbarModule,
     MatSidenavModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatIconModule,
     MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
 
     // ngx-translate and the loader module
     HttpClientModule,

@@ -1,26 +1,47 @@
 {
   "CLASS_VALIDATION": {
     "GENERAL": {
-      "FIELD_REQUIRED": "This fiels is required"
+      "FIELD_REQUIRED": "Este campo es obligatorio",
+      "INVALID_FIELDS_EXIST": "Algunos campos son inválidos"
     },
     "DICTIONARY": {
-      "BAD_NAME": "The name contains forbidden characters",
-      "DUPLICATED_NAME": "This dictionary name already exist!"
+      "BAD_NAME": "El nombre contiene caracteres no permitidos",
+      "DUPLICATED_NAME": "¡Este nombre de diccionario ya existe!"
     },
     "BOOLEAN": {
-      "BAD_FORMAT": "The input doesn't match a boolean(true or false)."
+      "BAD_FORMAT": "La entrada no coincide con un valor booleano (verdadero o falso)."
     },
     "NUMBER": {
-      "BAD_FORMAT": "The input doesn't match a number format.",
-      "START_WITH_PLUS_SIGN": "Ignore the '+' sign for positive numbers.",
-      "TOO_MUCH_DECIMALS": "Only 2 decimals are allowed.",
-      "UNNECESSARY_ZEROS": "Avoid unnecessary zeros."
+      "BAD_FORMAT": "La entrada no coincide con un formato numérico.",
+      "START_WITH_PLUS_SIGN": "Ignora el signo '+' para números positivos.",
+      "TOO_MUCH_DECIMALS": "Solo se permiten 2 decimales.",
+      "UNNECESSARY_ZEROS": "Evita ceros innecesarios."
     },
     "RULE_OBJECT_TYPE": {
-      "INVALID_TYPE": "This is not a valid RuleObjectType."
+      "INVALID_TYPE": "Este no es un RuleObjectType válido."
     },
     "STRING": {
-      "BAD_FORMAT": "This string has forbiden characters!"
+      "BAD_FORMAT": "¡Esta cadena tiene caracteres no permitidos!"
     }
+  },
+  "FREQUENCIES": {
+    "YEARLY": "anual",
+    "MONTHLY": "mensual",
+    "WEEKLY": "semanal",
+    "DAILY": "diario"
+  },
+  "MESSAGES": {
+    "DATALESS_TABLE": "Esta tabla aún no tiene datos"
+  },
+  "LABELS": {
+    "CAPITAL": "Capital",
+    "CALCULATE": "Calcular",
+    "FUTURE_VALUE": "Valor futuro",
+    "INTEREST": "Interés",
+    "INTEREST_RATE": "Tasa de interés",
+    "PERIOD": "Período",
+    "PERIODS": "Períodos",
+    "FREQUENCY": "Frecuencia",
+    "FREQUENCIES": "Frecuencias"
   }
 }
