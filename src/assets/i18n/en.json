@@ -43,6 +43,8 @@
     "PERIOD": "Period",
     "PERIODS": "Periods",
     "FREQUENCY": "Frequency",
-    "FREQUENCIES": "Frequencies"
+    "FREQUENCIES": "Frequencies",
+    "MONEY_OVER_TIME": "Value over time",
+    "CAPITAL_VS_INTEREST": "Capital vs interest"
   }
 }

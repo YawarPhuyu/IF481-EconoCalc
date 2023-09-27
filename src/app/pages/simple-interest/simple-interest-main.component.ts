@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import {
   ChartComponent,
   ApexAxisChartSeries,
+  ApexNonAxisChartSeries,
   ApexChart,
   ApexXAxis,
   ApexYAxis,
@@ -16,8 +17,9 @@ import {
   ApexStroke,
   ApexGrid
 } from "ng-apexcharts";
+import { ApexOptions } from 'ng-apexcharts';
 
-export type ChartOptions = {
+export type LineChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
@@ -27,6 +29,13 @@ export type ChartOptions = {
   stroke: ApexStroke;
   title: ApexTitleSubtitle;
 };
+
+export type PieChartOptions = {
+  title: ApexTitleSubtitle;
+  chart: ApexChart;
+  series: ApexNonAxisChartSeries;
+  labels: string[];
+}
 
 export interface TableRow {
   period: number;
@@ -42,7 +51,8 @@ export interface TableRow {
 export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild('paginator') paginator?: MatPaginator;
 
-  chartOptions?: ChartOptions;
+  lineChartOptions?: LineChartOptions;
+  pieChartOptions?: PieChartOptions;
   labels?: { [key: string]: string } = {};
 
   destroy$: Subject<void> = new Subject<void>();
@@ -120,7 +130,7 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
   }
 
   updateChart = () => {
-    this.chartOptions = {
+    this.lineChartOptions = {
       series: [
         {
           name: this.labels?.['FUTURE_VALUE'],
@@ -132,7 +142,7 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
         }
       ],
       chart: {
-        height: 350,
+        // height: '500px',
         type: "line",
         zoom: {
           enabled: false
@@ -145,7 +155,7 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
         curve: "straight"
       },
       title: {
-        text: "Money growth",
+        text: this.labels?.['MONEY_OVER_TIME'],
         align: "left"
       },
       grid: {
@@ -161,5 +171,26 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
         decimalsInFloat: 2,
       }
     };
+
+    let last_index = this.table_data.data.length - 1;
+
+    this.pieChartOptions = {
+      title: {
+        text: this.labels?.['CAPITAL_VS_INTEREST'],
+        align: 'left',
+      },
+      chart: {
+        type: 'pie',
+        // height: '500px',
+        zoom: {
+          enabled: false,
+        },
+      },
+      series: [
+        this.table_data.data[0].future_value,
+        this.table_data.data[last_index].interest
+      ],
+      labels: [this.labels?.['CAPITAL'] || '', this.labels?.['INTEREST'] || ''],
+    }
   }
 }
