@@ -31,7 +31,8 @@
     "DAILY": "diario"
   },
   "MESSAGES": {
-    "DATALESS_TABLE": "Esta tabla aún no tiene datos"
+    "DATALESS_TABLE": "Esta tabla aún no tiene datos",
+    "DATALESS_CHART": "No hay datos para renderizar el gráfico"
   },
   "LABELS": {
     "CAPITAL": "Capital",

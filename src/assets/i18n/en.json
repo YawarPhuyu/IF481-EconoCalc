@@ -31,7 +31,8 @@
     "DAILY": "daily"
   },
   "MESSAGES": {
-    "DATALESS_TABLE": "This table has no data yet"
+    "DATALESS_TABLE": "This table has no data yet",
+    "DATALESS_CHART": "There is no data to render this chart"
   },
   "LABELS": {
     "CAPITAL": "Capital",

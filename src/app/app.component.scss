@@ -1,0 +1,20 @@
+:host mat-toolbar {
+  height: 7vh;
+  min-height: 60px;
+}
+
+:host mat-drawer-container {
+  height: 93vh;
+  width: 100vw;
+}
+
+:host mat-drawer-content {
+  height: 100%;
+  width: auto;
+}
+
+:host mat-drawer{
+  width: 20vw;
+  max-width: 250px;
+  min-width: 200px;
+}

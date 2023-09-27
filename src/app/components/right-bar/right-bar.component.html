@@ -1,0 +1,35 @@
+<div class="d-flex flex-column justify-content-start align-items-center w-100 h-100">
+  <!-- <mat-list>
+    <mat-list-item
+    [routerLink]="['/simple-interest']"
+    >
+      <mat-icon matListItemIcon>schedule</mat-icon>
+      <div matListItemTitle>Interés Simple</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list> -->
+  <mat-nav-list>
+    <a mat-list-item class="rounded-5"
+      [routerLink]="['/simple-interest']"
+    >
+      <mat-icon matListItemIcon>schedule</mat-icon>
+      <span matListItemTitle>Interés Simple</span>
+    </a>
+  </mat-nav-list>
+  <div class="flex-fill"></div>
+
+  <!-- FOOTER -->
+  <mat-divider class="w-100"></mat-divider>
+  <div class="d-flex flex-column align-items-center my-2">
+    <div class="d-flex align-items-center justify-content-center w-100 p-2">
+      <img class="float-left" alt="Escudo UNSAAC" src="./../../../assets/img/escudo.png" width="55%">
+      <div clas="d-flex flex-column">
+        <div class="text-center"><b>UNSAAC</b></div>
+        <mat-divider></mat-divider>
+        <div class="text-center">Universidad Nacional de San Antonio Abad del Cusco</div>
+      </div>
+    </div>
+    <mat-divider class="w-75"></mat-divider>
+    <div class="text-center">2023-II</div>
+  </div>
+</div>

@@ -13,23 +13,32 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 
+// Apexcharts
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleInterestMainComponent } from './pages/simple-interest/simple-interest-main.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
+import { RightBarComponent } from './components/right-bar/right-bar.component';
+import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SimpleInterestMainComponent,
     InputFieldComponent,
+    RightBarComponent,
+    WelcomePageComponent,
   ],
   imports: [
     // Material modules
@@ -43,6 +52,8 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatDividerModule,
+    MatListModule,
 
     // ngx-translate and the loader module
     HttpClientModule,
@@ -53,6 +64,9 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
             deps: [HttpClient]
         }
     }),
+
+    //ApexCharts
+    NgApexchartsModule,
 
     BrowserModule,
     FormsModule,

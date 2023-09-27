@@ -3,14 +3,18 @@
   (click)="leftDrawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>IF481 - EconoCalculator</span>
+  <span [routerLink]="['']">IF481 - EconoCalculator</span>
 </mat-toolbar>
 
 <mat-drawer-container autosize>
-  <mat-drawer #leftDrawer position="start" mode="side" >
-    some drawer contetn
+  <mat-drawer #leftDrawer position="start" mode="side" opened="true">
+    <app-right-bar></app-right-bar>
   </mat-drawer>
   <mat-drawer-content>
-    <router-outlet></router-outlet>
+    <div class="card m-2">
+      <div class="card-body">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

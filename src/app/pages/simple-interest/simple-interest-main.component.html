@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col d-flex flex-column align-items-center justify-content-start" [formGroup]="form_group">
+    <div class="col-12 col-xl-6 mb-5 d-flex flex-column align-items-center justify-content-start" [formGroup]="form_group">
       <app-input-field
         formControlName="capital"
         [required]="true"
@@ -43,7 +43,26 @@
       </button>
     </div>
 
-    <div class="col">
+    <div class="col-12 col-xl-6 mb-5">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [yaxis]="chartOptions.yaxis"
+        [dataLabels]="chartOptions.dataLabels"
+        [grid]="chartOptions.grid"
+        [stroke]="chartOptions.stroke"
+        [title]="chartOptions.title"
+        *ngIf="chartOptions; else noData;"
+      ></apx-chart>
+      <ng-template #noData>
+        <div class="fw-bold fw-5 text-center">
+          {{ 'MESSAGES.DATALESS_CHART' | translate }}
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="col-12 mb-5">
       <table mat-table
       class="w-100"
       [dataSource]="table_data">
@@ -72,10 +91,10 @@
       </table>
       <mat-paginator
       #paginator
-      [pageSize]="7"
-      [pageSizeOptions]="[3, 7, 15, 30, 60, 120]"
+      [pageSize]="6"
+      [pageSizeOptions]="[3, 6, 12, 30, 60, 120]"
       [showFirstLastButtons]="true"
-      ></mat-paginator>
+      [hidden]="table_data.data.length == 0"></mat-paginator>
     </div>
   </div>
 </div>
