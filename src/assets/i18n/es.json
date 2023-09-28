@@ -11,10 +11,20 @@
     "BOOLEAN": {
       "BAD_FORMAT": "La entrada no coincide con un valor booleano (verdadero o falso)."
     },
+    "INTEGER_NUMBER": {
+      "BAD_FORMAT": "La entrada no coincide con un formato de número entero.",
+      "DECIMALS": "Los números enteros no pueden tener decimales."
+    },
+    "NATURAL_NUMBER": {
+      "BAD_FORMAT": "La entrada no coincide con un formato de número natural.",
+      "DECIMALS": "Los números naturales no pueden tener decimales.",
+      "NEGATIVE": "Los números naturales no pueden tomar valores negativos.",
+      "ZERO": "El valor no puede ser cero."
+    },
     "NUMBER": {
       "BAD_FORMAT": "La entrada no coincide con un formato numérico.",
       "START_WITH_PLUS_SIGN": "Ignora el signo '+' para números positivos.",
-      "TOO_MUCH_DECIMALS": "Solo se permiten 2 decimales.",
+      "TOO_MUCH_DECIMALS": "Hay demasiados decimales.",
       "UNNECESSARY_ZEROS": "Evita ceros innecesarios."
     },
     "RULE_OBJECT_TYPE": {
@@ -25,7 +35,7 @@
     }
   },
   "FREQUENCIES": {
-    "YEARLY": "anual",
+    "ANNUALLY": "anual",
     "MONTHLY": "mensual",
     "WEEKLY": "semanal",
     "DAILY": "diario"
@@ -37,14 +47,17 @@
   "LABELS": {
     "CAPITAL": "Capital",
     "CALCULATE": "Calcular",
+    "COMPOUND_INTEREST": "Interés compuesto",
     "FUTURE_VALUE": "Valor futuro",
     "INTEREST": "Interés",
+    "INTEREST_PERIOD": "Periodo de interés",
     "INTEREST_RATE": "Tasa de interés",
     "PERIOD": "Período",
     "PERIODS": "Períodos",
     "FREQUENCY": "Frecuencia",
     "FREQUENCIES": "Frecuencias",
-    "MONEY_OVER_TIME": "Valor a través del tiempo",
-    "CAPITAL_VS_INTEREST": "Capital vs interés"
+    "VALUE_OVER_TIME": "Valor a través del tiempo",
+    "CAPITAL_VS_INTEREST": "Capital vs interés",
+    "SIMPLE_INTEREST": "Interés simple"
   }
 }

@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { Subject, Subscription } from 'rxjs';
+import { AbstractControl, ControlValueAccessor, FormGroupDirective, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgForm, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ValidatorsService } from 'src/app/shared/validators';
 
 @Component({
@@ -31,6 +32,8 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
   @Input() option_list?: string[] | null;
   @Input() place_holder: string = "";
 
+  destroy$: Subject<void> = new Subject<void>();
+
   translate_sub$?: Subscription;
   update_errors_sub$?: Subscription;
 
@@ -40,7 +43,7 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
   input_type: string = "";
   validators: ValidatorFn[] = [];
 
-  errors_tooltip: string = "";
+  error_message: string = "";
   private errors_obj$: Subject<ValidationErrors> = new Subject<ValidationErrors>();
 
   onChange!: (user_input: string) => {};
@@ -48,9 +51,7 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
 
   constructor(
     private translate: TranslateService
-  ){
-
-  }
+  ){}
   
   ngOnInit(): void {
     // this.visible_input_fields_svc.registerInputField(this);
@@ -69,7 +70,7 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
     }
     
     this.errors_obj$ = new Subject<ValidationErrors>();
-    this.update_errors_sub$ = this.errors_obj$.asObservable().subscribe(this.updateErrorTooltip);
+    this.update_errors_sub$ = this.errors_obj$.asObservable().subscribe(this.updateErrorMessage);
   }
 
   ngOnDestroy(): void {
@@ -131,9 +132,9 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
     return errors_obj;
   }
 
-  updateErrorTooltip = (errors_obj: ValidationErrors) => {
+  updateErrorMessage = (errors_obj: ValidationErrors) => {
     if(Object.keys(errors_obj).length === 0){
-      this.errors_tooltip = "";
+      this.error_message = "";
       return;
     }
 
@@ -146,12 +147,18 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
         errors_translate_keys.push(`CLASS_VALIDATION.GENERAL.FIELD_${error.toUpperCase()}`)
     }
 
-    this.errors_tooltip = "";
+    this.error_message = "";
     this.translate_sub$?.unsubscribe();
     this.translate_sub$ = this.translate.get(errors_translate_keys).subscribe((values) => {
-      this.errors_tooltip = (Object.values(values) as Array<string>).join('\n');
+      this.error_message = (Object.values(values) as Array<string>).join('\n');
     });
   }
+
+  // error_state_matcher: ErrorStateMatcher = {
+  //   isErrorState(control: AbstractControl<any, any> | null, form: FormGroupDirective | NgForm | null): boolean {
+  //     return (control?.invalid)? true : false;
+  //   }
+  // }
 
   checkType(type: string | undefined): string {
     if(!type) return "text";
@@ -159,7 +166,8 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
     type = type.toLowerCase();
     switch(type) {
       case 'datetime' : return 'datetime-local';
-      case 'integer' : return 'number';
+      case 'integer_number' : return 'number';
+      case 'natural_number' : return 'number';
       case 'button' : return 'button';
       case 'checkbox' : return 'checkbox';
       case 'color' : return 'color';

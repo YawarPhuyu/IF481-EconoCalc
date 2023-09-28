@@ -1,22 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
-
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@angular/material/prebuilt-themes/purple-green.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.invalid-matToolTip {
-  color: white;
-  background-color: rgba(255, 0, 0, 1);
-}
+// .invalid-matToolTip {
+//   color: white;
+//   background-color: rgba(255, 0, 0, 1);
+// }
 
-mat-icon {
-  color: primary;
-}
+// mat-icon {
+//   color: primary;
+// }
 
-.invalid-form-field,
-.invalid-form-field mat-icon,
-.invalid-form-field mat-label {
-  color: red;
-  border-color: red;
-}
+// .invalid-form-field,
+// .invalid-form-field mat-icon,
+// .invalid-form-field mat-label {
+//   color: red;
+//   border-color: red;
+// }

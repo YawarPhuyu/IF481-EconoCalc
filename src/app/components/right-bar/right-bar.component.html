@@ -1,10 +1,14 @@
 <div class="d-flex flex-column justify-content-start align-items-center w-100 h-100">
   <mat-nav-list class="px-1">
-    <a mat-list-item class="rounded-pill shadow-sm"
-      [routerLink]="['/simple-interest']"
+    <a mat-list-item class="rounded-pill mb-3"
+      [routerLink]="[op.router_link]"
+      [routerLinkActive]="['mat-elevation-z8']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="selected_option = op"
+      *ngFor="let op of options"
     >
-      <mat-icon matListItemIcon class="fw-bold text-dark">schedule</mat-icon>
-      <span matListItemTitle class="fw-bold">Interés Simple</span>
+      <mat-icon matListItemIcon class="fw-bold">{{ op.icon }}</mat-icon>
+      <span matListItemTitle class="fw-bold text-capitalize">{{ op.title | translate }}</span>
     </a>
   </mat-nav-list>
   <div class="flex-fill"></div>
@@ -18,7 +22,7 @@
         <div class="text-center fw-bold">Universidad Nacional de San Antonio Abad del Cusco</div>
       </div>
     </div>
-    <mat-divider class="w-75"></mat-divider>
+    <mat-divider class="w-75 mb-2"></mat-divider>
     <div class="text-center fw-bold">Semestre 2023-II</div>
   </div>
 </div>

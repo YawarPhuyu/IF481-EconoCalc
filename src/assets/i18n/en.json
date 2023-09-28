@@ -11,10 +11,20 @@
     "BOOLEAN": {
       "BAD_FORMAT": "The input doesn't match a boolean(true or false)."
     },
+    "INTEGER_NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a integer number format.",
+      "DECIMALS": "Integers cannot have decimals."
+    },
+    "NATURAL_NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a natural number format.",
+      "DECIMALS": "Natural numbers cannot have decimals.",
+      "NEGATIVE": "Natural numbers cannot take negative values.",
+      "ZERO": "The value cannot be zero."
+    },
     "NUMBER": {
       "BAD_FORMAT": "The input doesn't match a number format.",
       "START_WITH_PLUS_SIGN": "Ignore the '+' sign for positive numbers.",
-      "TOO_MUCH_DECIMALS": "Only 2 decimals are allowed.",
+      "TOO_MUCH_DECIMALS": "There are too much decimals.",
       "UNNECESSARY_ZEROS": "Avoid unnecessary zeros."
     },
     "RULE_OBJECT_TYPE": {
@@ -25,7 +35,7 @@
     }
   },
   "FREQUENCIES": {
-    "YEARLY": "annually",
+    "ANNUALLY": "annually",
     "MONTHLY": "monthly",
     "WEEKLY": "weekly",
     "DAILY": "daily"
@@ -37,14 +47,17 @@
   "LABELS": {
     "CAPITAL": "Capital",
     "CALCULATE": "Calculate",
+    "COMPOUND_INTEREST": "Compound interest",
     "FUTURE_VALUE": "Future value",
     "INTEREST": "Interest",
+    "INTEREST_PERIOD": "Interest period",
     "INTEREST_RATE": "Interest rate",
     "PERIOD": "Period",
     "PERIODS": "Periods",
     "FREQUENCY": "Frequency",
     "FREQUENCIES": "Frequencies",
-    "MONEY_OVER_TIME": "Value over time",
-    "CAPITAL_VS_INTEREST": "Capital vs interest"
+    "VALUE_OVER_TIME": "Value over time",
+    "CAPITAL_VS_INTEREST": "Capital vs interest",
+    "SIMPLE_INTEREST": "Simple interest"
   }
 }

@@ -4,17 +4,25 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span [routerLink]="['']">IF481 - EconoCalculator</span>
+  <span class="flex-fill"></span>
+  <button mat-icon-button [matMenuTriggerFor]="language">
+    <mat-icon>language</mat-icon>
+  </button>
+  <mat-menu #language>
+    <button mat-menu-item (click)="setLanguage('es')">Español</button>
+    <button mat-menu-item (click)="setLanguage('en')">Inglés</button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-drawer-container autosize>
   <mat-drawer #leftDrawer position="start" mode="side" opened="true">
     <app-right-bar></app-right-bar>
   </mat-drawer>
-  <mat-drawer-content>
-    <div class="card m-2">
-      <div class="card-body">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+  <mat-drawer-content class="p-3">
+    <router-outlet></router-outlet>
+    <!-- <div class="rounded m-2 mat-elevation-z2">
+    </div> -->
+    <!-- <div class="card m-2">
+    </div> -->
   </mat-drawer-content>
 </mat-drawer-container>

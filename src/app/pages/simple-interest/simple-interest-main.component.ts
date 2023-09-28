@@ -5,19 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexNonAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexYAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid
-} from "ng-apexcharts";
-import { ApexOptions } from 'ng-apexcharts';
+import { ChartComponent, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexDataLabels, ApexTitleSubtitle, ApexStroke, ApexGrid } from "ng-apexcharts";
 
 export type LineChartOptions = {
   series: ApexAxisChartSeries;
@@ -41,6 +29,21 @@ export interface TableRow {
   period: number;
   interest: number;
   future_value: number;
+}
+
+export const time_conversions: { [key: string]: number } = {
+  year_year: 1,
+  year_month: 12,
+  year_week: 52.1429,
+  year_day: 365,
+  month_year: 0.0833334,
+  month_month: 1,
+  month_week: 4.34524,
+  month_day: 30.4167,
+  week_year: 0.0191781,
+  week_month: 0.230137,
+  week_week: 1,
+  week_day: 7,
 }
 
 @Component({
@@ -69,27 +72,31 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
     private fb: FormBuilder,
   ){
     this.form_group = fb.group({
-      capital: ['', [Validators.required]],
-      interest_rate: ['', [Validators.required]],
-      periods: ['', [Validators.required]],
-      frequency: ['', [Validators.required]],
+      capital: [''],
+      interest_rate: [''],
+      interest_period: [''],
+      periods: [''],
+      frequency: [''],
     });
 
     this.table_data = new MatTableDataSource<TableRow>();
     
-    translate.get('FREQUENCIES').subscribe((data) => {
-      if(!data)
-        return;
+    this.frequencies = this.getFrecuencies();
+    this.labels = translate.instant('LABELS');
 
-      for(let lap in data){
-        this.frequencies.push(data[lap]);
+    translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((lang_change) => {
+      this.frequencies = this.getFrecuencies();
+      this.labels = translate.instant('LABELS');
+      this.setDefaultFormValues();
+      this.updateCharts();
+      for(let c in this.form_group.controls) {
+        this.form_group.controls[c].updateValueAndValidity();
       }
     });
-
-    translate.get('LABELS').subscribe(tr => this.labels = tr);
   }
 
   ngOnInit(): void {
+    this.setDefaultFormValues();
   }
 
   ngAfterViewInit(): void {
@@ -103,14 +110,15 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
 
   calculateTable = () => {
     if(this.form_group.invalid){
-      console.log(this.form_group.valid);
       return;
     }
 
     let data: TableRow[] = [];
     let capital: number = this.form_group.get('capital')?.value;
     let interest_rate: number = this.form_group.get('interest_rate')?.value / 100;
+    let interest_period: string = this.form_group.get('interest_period')?.value;
     let periods: number = this.form_group.get('periods')?.value;
+    let frequency: string = this.form_group.get('frecuency')?.value;
 
     for (let i = 0; i <= periods; i++){
       let row: TableRow = {
@@ -122,14 +130,39 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
     }
 
     this.updateTable(data);
-    this.updateChart();
+    this.updateCharts();
+  }
+
+  getFrecuencies = (): string[] => {
+    let raw = this.translate.instant('FREQUENCIES');
+    let frequencies: string[] = [];
+    
+    for(let f in raw){
+      frequencies.push(raw[f]);
+    }
+
+    return frequencies;
+  }
+  
+  setDefaultFormValues = () => {
+    this.translate.get(['FREQUENCIES.ANNUALLY', 'FREQUENCIES.MONTHLY']).subscribe((data) => {
+      data = Object.values(data) as Array<string>;
+      this.form_group.get('interest_period')?.setValue(data[0]);
+      this.form_group.get('frequency')?.setValue(data[1]);
+    });
   }
 
   updateTable = (data: TableRow[]) => {
     this.table_data.data = data;
   }
 
-  updateChart = () => {
+  updateCharts = () => {
+    if(this.table_data.data.length === 0) {
+      this.lineChartOptions = undefined;
+      this.pieChartOptions = undefined;
+      return;
+    }
+
     this.lineChartOptions = {
       series: [
         {
@@ -155,7 +188,7 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
         curve: "straight"
       },
       title: {
-        text: this.labels?.['MONEY_OVER_TIME'],
+        text: this.labels?.['VALUE_OVER_TIME'],
         align: "left"
       },
       grid: {

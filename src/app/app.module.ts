@@ -15,6 +15,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -31,6 +33,7 @@ import { SimpleInterestMainComponent } from './pages/simple-interest/simple-inte
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { RightBarComponent } from './components/right-bar/right-bar.component';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
+import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
     InputFieldComponent,
     RightBarComponent,
     WelcomePageComponent,
+    CompoundInterestComponent,
   ],
   imports: [
     // Material modules
@@ -54,6 +58,8 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
     MatButtonModule,
     MatDividerModule,
     MatListModule,
+    MatMenuModule,
+    MatDatepickerModule,
 
     // ngx-translate and the loader module
     HttpClientModule,
