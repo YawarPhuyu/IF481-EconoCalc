@@ -2,7 +2,7 @@
   <mat-nav-list class="px-1">
     <a mat-list-item class="rounded-pill mb-3"
       [routerLink]="[op.router_link]"
-      [routerLinkActive]="['mat-elevation-z8']"
+      [routerLinkActive]="['shadow']"
       [routerLinkActiveOptions]="{ exact: true }"
       (click)="selected_option = op"
       *ngFor="let op of options"

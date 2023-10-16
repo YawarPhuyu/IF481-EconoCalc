@@ -24,10 +24,10 @@
       [(ngModel)]="user_input"
     >
       <mat-option
+        [value]="op.value || op"
         *ngFor="let op of option_list"
-        [value]="op"
       >
-        {{ op }}
+        {{ op.label || op }}
       </mat-option>
     </mat-select>
   </ng-template>

@@ -1,132 +1,147 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-xl-5 mb-5">
-      <form class="d-flex flex-column align-items-center justify-content-start rounded mat-elevation-z2 p-2"
-        [formGroup]="form_group"
-      >
-        <app-input-field
-          formControlName="capital"
-          [required]="true"
-          [icon]="'paid'"
-          [label]="'LABELS.CAPITAL' | translate"
-          [type]="'number'"
-        ></app-input-field>
-  
-        <app-input-field
-          formControlName="interest_rate"
-          [required]="true"
-          [icon]="'percent'"
-          [label]="'LABELS.INTEREST_RATE' | translate"
-          [type]="'number'"
-        ></app-input-field>
-  
-        <app-input-field
-          formControlName="interest_period"
-          [required]="true"
-          [icon]="'timelapse'"
-          [label]="'LABELS.INTEREST_PERIOD' | translate"
-          [option_list]="frequencies"
-        ></app-input-field>
-  
-        <app-input-field
-          formControlName="periods"
-          [required]="true"
-          [icon]="'update'"
-          [label]="'LABELS.PERIODS' | translate"
-          [type]="'natural_number'"
-        ></app-input-field>
-  
-        <app-input-field
-          formControlName="frequency"
-          [required]="true"
-          [icon]="'timelapse'"
-          [label]="'LABELS.FREQUENCY' | translate"
-          [option_list]="frequencies"
-        ></app-input-field>
-  
-        <button
-        mat-raised-button
-        [color]="form_group.valid? 'primary' : 'warn'" 
-        (click)="calculateTable()"
-        [matTooltip]="form_group.invalid? ('CLASS_VALIDATION.GENERAL.INVALID_FIELDS_EXIST' | translate) : ''"
-        matTooltipPosition="right">
-          {{ 'LABELS.CALCULATE' | translate }}
-        </button>
-      </form>
+      <div class="card rounded shadow">
+        <div class="card-header fs-6 fw-bold">
+          {{ 'LABELS.DATA' | translate }}
+        </div>
+        <form class="card-body d-flex flex-column align-items-center justify-content-between"
+          [formGroup]="form_group"
+        >
+          <app-input-field
+            formControlName="capital"
+            [required]="true"
+            [icon]="'paid'"
+            [label]="'LABELS.CAPITAL' | translate"
+            [type]="'number'"
+          ></app-input-field>
+    
+          <app-input-field
+            formControlName="interest_rate"
+            [required]="true"
+            [icon]="'percent'"
+            [label]="'LABELS.INTEREST_RATE' | translate"
+            [type]="'number'"
+          ></app-input-field>
+    
+          <app-input-field
+            formControlName="interest_period"
+            [required]="true"
+            [icon]="'timelapse'"
+            [label]="'LABELS.INTEREST_PERIOD' | translate"
+            [option_list]="frequencies"
+          ></app-input-field>
+    
+          <app-input-field
+            formControlName="periods"
+            [required]="true"
+            [icon]="'update'"
+            [label]="'LABELS.PERIODS' | translate"
+            [type]="'natural_number'"
+          ></app-input-field>
+    
+          <app-input-field
+            formControlName="frequency"
+            [required]="true"
+            [icon]="'timelapse'"
+            [label]="'LABELS.FREQUENCY' | translate"
+            [option_list]="frequencies"
+          ></app-input-field>
+          
+          <button
+          mat-raised-button
+          type="submit"
+          [color]="form_group.valid? 'primary' : 'warn'" 
+          (click)="calculateTable()"
+          [matTooltip]="form_group.invalid? ('CLASS_VALIDATION.GENERAL.INVALID_FIELDS_EXIST' | translate) : ''"
+          matTooltipPosition="right">
+            {{ 'LABELS.CALCULATE' | translate }}
+          </button>
+        </form>
+      </div>
     </div>
 
     <div class="col-12 col-xl-7 mb-5">
-      <div class="rounded mat-elevation-z2 p-2">
-        <apx-chart
-          [series]="lineChartOptions.series"
-          [chart]="lineChartOptions.chart"
-          [xaxis]="lineChartOptions.xaxis"
-          [yaxis]="lineChartOptions.yaxis"
-          [dataLabels]="lineChartOptions.dataLabels"
-          [grid]="lineChartOptions.grid"
-          [stroke]="lineChartOptions.stroke"
-          [title]="lineChartOptions.title"
-          *ngIf="lineChartOptions; else noLinearChart;"
-        ></apx-chart>
-        <ng-template #noLinearChart>
-          <div class="fw-bold fw-5 text-center">
-            {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.VALUE_OVER_TIME' | translate}}
-          </div>
-        </ng-template>
+      <div class="card rounded shadow">
+        <div class="card-header fs-6 fw-bold">{{ 'LABELS.CHARTS.LINE' | translate}}</div>
+        <div class="card-body">
+          <apx-chart
+            [series]="lineChartOptions.series"
+            [chart]="lineChartOptions.chart"
+            [xaxis]="lineChartOptions.xaxis"
+            [yaxis]="lineChartOptions.yaxis"
+            [dataLabels]="lineChartOptions.dataLabels"
+            [grid]="lineChartOptions.grid"
+            [stroke]="lineChartOptions.stroke"
+            [title]="lineChartOptions.title"
+            *ngIf="lineChartOptions; else noLinearChart;"
+          ></apx-chart>
+          <ng-template #noLinearChart>
+            <div class="fw-bold text-center">
+              {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.VALUE_OVER_TIME' | translate}}
+            </div>
+          </ng-template>
+        </div>
       </div>
     </div>
 
     <div class="col-12 col-xl-5 mb-5">
-      <div class="rounded mat-elevation-z2 p-2">
-        <apx-chart
-          [title]="pieChartOptions.title"
-          [chart]="pieChartOptions.chart"
-          [series]="pieChartOptions.series"
-          [labels]="pieChartOptions.labels"
-          *ngIf="pieChartOptions; else noPieChart;"
-        ></apx-chart>
-        <ng-template #noPieChart>
-          <div class="fw-bold fw-5 text-center">
-            {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.CAPITAL_VS_INTEREST' | translate }}
-          </div>
-        </ng-template>
+      <div class="card rounded shadow">
+        <div class="card-header fs-6 fw-bold">{{ 'LABELS.CHARTS.PIE' | translate}}</div>
+        <div class="card-body">
+          <apx-chart
+            [title]="pieChartOptions.title"
+            [chart]="pieChartOptions.chart"
+            [series]="pieChartOptions.series"
+            [labels]="pieChartOptions.labels"
+            *ngIf="pieChartOptions; else noPieChart;"
+          ></apx-chart>
+          <ng-template #noPieChart>
+            <div class="fw-bold text-center">
+              {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.CAPITAL_VS_INTEREST' | translate }}
+            </div>
+          </ng-template>
+        </div>
       </div>
     </div>
 
     <div class="col-12 col-xl-7 mb-5">
-      <div class="rounded mat-elevation-z2 p-2">
-        <table mat-table
-        class="w-100"
-        [dataSource]="table_data">
-          <ng-container matColumnDef="period">
-            <th mat-header-cell *matHeaderCellDef>{{ "LABELS.PERIOD" | translate }} (n)</th>
-            <td mat-cell *matCellDef="let element">{{ element.period }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="interest">
-            <th mat-header-cell *matHeaderCellDef>{{ "LABELS.INTEREST" | translate}} (I)</th>
-            <td mat-cell *matCellDef="let element">{{ element.interest | number: '1.2-2' }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="future_value">
-            <th mat-header-cell *matHeaderCellDef>{{ 'LABELS.FUTURE_VALUE' | translate }} (F)</th>
-            <td mat-cell *matCellDef="let element">{{ element.future_value | number: '1.2-2' }}</td>
-          </ng-container>
-          
-          <tr mat-header-row *matHeaderRowDef="columns_to_show"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns_to_show"></tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell text-center" [attr.colspan]="columns_to_show.length">
-              {{ "MESSAGES.DATALESS_TABLE" | translate}}
-            </td>
-          </tr>
-        </table>
-        <mat-paginator
-        #paginator
-        [pageSize]="6"
-        [pageSizeOptions]="[3, 6, 12, 30, 60, 120]"
-        [showFirstLastButtons]="true"
-        [hidden]="table_data.data.length == 0"></mat-paginator>
+      <div class="card rounded shadow">
+        <div class="card-header fs-6 fw-bold">{{ 'LABELS.DATA_TABLE' | translate }}</div>
+        <div class="card-body">
+          <table mat-table
+          class="w-100"
+          [dataSource]="table_data">
+            <ng-container matColumnDef="period">
+              <th mat-header-cell *matHeaderCellDef>{{ "LABELS.PERIOD" | translate }} (n)</th>
+              <td mat-cell *matCellDef="let element">{{ element.period }}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="interest">
+              <th mat-header-cell *matHeaderCellDef>{{ "LABELS.INTEREST" | translate}} (I)</th>
+              <td mat-cell *matCellDef="let element">{{ element.interest | number: '1.2-2' }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="future_value">
+              <th mat-header-cell *matHeaderCellDef>{{ 'LABELS.FUTURE_VALUE' | translate }} (F)</th>
+              <td mat-cell *matCellDef="let element">{{ element.future_value | number: '1.2-2' }}</td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="columns_to_show"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns_to_show"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell text-center" [attr.colspan]="columns_to_show.length">
+                {{ "MESSAGES.DATALESS_TABLE" | translate}}
+              </td>
+            </tr>
+          </table>
+          <mat-paginator
+          #paginator
+          [pageSize]="6"
+          [pageSizeOptions]="[3, 6, 12, 30, 60, 120]"
+          [showFirstLastButtons]="true"
+          [hidden]="table_data.data.length == 0"></mat-paginator>
+        </div>
       </div>
     </div>
   </div>

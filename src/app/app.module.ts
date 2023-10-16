@@ -31,7 +31,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleInterestMainComponent } from './pages/simple-interest/simple-interest-main.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
-import { RightBarComponent } from './components/right-bar/right-bar.component';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
 import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
 
@@ -40,7 +40,7 @@ import { CompoundInterestComponent } from './components/compound-interest/compou
     AppComponent,
     SimpleInterestMainComponent,
     InputFieldComponent,
-    RightBarComponent,
+    NavigationBarComponent,
     WelcomePageComponent,
     CompoundInterestComponent,
   ],

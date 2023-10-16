@@ -7,11 +7,11 @@ export type Option = {
 }
 
 @Component({
-  selector: 'app-right-bar',
-  templateUrl: './right-bar.component.html',
-  styleUrls: ['./right-bar.component.scss']
+  selector: 'navigation-bar',
+  templateUrl: './navigation-bar.component.html',
+  styleUrls: ['./navigation-bar.component.scss']
 })
-export class RightBarComponent {
+export class NavigationBarComponent {
 
   options: Option[] = [
     {

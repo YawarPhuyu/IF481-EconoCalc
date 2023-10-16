@@ -29,7 +29,7 @@ export class InputFieldComponent implements OnInit, OnDestroy, ControlValueAcces
   @Input() label?: string;
   @Input() type: string = "";
   @Input() extra_validation?: ValidatorFn[] | ValidatorFn;
-  @Input() option_list?: string[] | null;
+  @Input() option_list?: any[] | null;
   @Input() place_holder: string = "";
 
   destroy$: Subject<void> = new Subject<void>();
