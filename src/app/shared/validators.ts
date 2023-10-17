@@ -30,7 +30,7 @@ export const patterns: { [key: string]: RegExp } = {
   dictionary_name: /^[A-Za-z0-9]+\w*$/,
   integer_number: /^((\-?[1-9]\d*)|0)$/,
   natural_number: /^[1-9]\d*$/,
-  number: /^\-?(((0|([1-9]\d*))\.\d{0,3}[1-9])|([1-9]\d*))$/,
+  number: /^\-?(((0|([1-9]\d*))\.\d*[1-9])|([1-9]\d*))$/,
   boolean: /^false|true$/i,
   // string: /.*/,
   string: new RegExp('^[^\"\'\`\\\$\#\~\@\Ø\,\!\=\&\%]*$'),
@@ -172,11 +172,11 @@ export const ClassValidations: { [key: string]: {options_list: string[] | null, 
         let errors: { [key: string]: any } = {};
   
         // Check for too much decimals
-        reg = /\.\d{4,}$/;
-        match = reg.test(control_value);
+        // reg = /\.\d{4,}$/;
+        // match = reg.test(control_value);
   
-        if(match)
-          errors['too_much_decimals'] = { translate_key: "CLASS_VALIDATION.NUMBER.TOO_MUCH_DECIMALS" };
+        // if(match)
+        //   errors['too_much_decimals'] = { translate_key: "CLASS_VALIDATION.NUMBER.TOO_MUCH_DECIMALS" };
   
         // Check for a plus sign at the start
         reg = /^\+/;

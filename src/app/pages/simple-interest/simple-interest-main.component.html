@@ -47,16 +47,33 @@
             [label]="'LABELS.FREQUENCY' | translate"
             [option_list]="frequencies"
           ></app-input-field>
+
+          <app-input-field
+            formControlName="fixed_interest"
+            [icon]="'percent'"
+            [label]="'LABELS.FIXED_INTEREST' | translate"
+            [type]="'number'"
+          ></app-input-field>
           
-          <button
-          mat-raised-button
-          type="submit"
-          [color]="form_group.valid? 'primary' : 'warn'" 
-          (click)="calculateTable()"
-          [matTooltip]="form_group.invalid? ('CLASS_VALIDATION.GENERAL.INVALID_FIELDS_EXIST' | translate) : ''"
-          matTooltipPosition="right">
-            {{ 'LABELS.CALCULATE' | translate }}
-          </button>
+          <div class="d-flex align-items-center justify-content-evenly w-100">
+            <button
+            mat-raised-button
+            type="submit"
+            [color]="form_group.valid? 'primary' : 'warn'" 
+            (click)="calculateTable()"
+            [matTooltip]="form_group.invalid? ('CLASS_VALIDATION.GENERAL.INVALID_FIELDS_EXIST' | translate) : ''"
+            matTooltipPosition="right">
+              {{ 'LABELS.CALCULATE' | translate }}
+            </button>
+
+            <button
+            mat-raised-button
+            type="button"
+            color="primary" 
+            (click)="randomFill()">
+              {{ 'LABELS.RANDOM_FILL' | translate }}
+            </button>
+          </div>
         </form>
       </div>
     </div>

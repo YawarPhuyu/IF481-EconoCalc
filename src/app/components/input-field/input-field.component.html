@@ -9,8 +9,10 @@
 >
   <mat-label *ngIf="label">{{ label }}</mat-label>
   <ng-container *ngIf="!option_list; else selectField">
-    <input matInput 
+    <input
+    matInput
       (input)="onChange(user_input)"
+      [disabled]="disabled"
       [required]="required"
       [type]="input_type"
       [(ngModel)]="user_input"
@@ -20,6 +22,7 @@
     <mat-select
       name="op"
       (selectionChange)="onChange(user_input);"
+      [disabled]="disabled"
       [required]="required"
       [(ngModel)]="user_input"
     >
@@ -27,7 +30,7 @@
         [value]="op.value || op"
         *ngFor="let op of option_list"
       >
-        {{ op.label || op }}
+        {{ op.translate_key? (op.translate_key | translate) : (op.label || op) }}
       </mat-option>
     </mat-select>
   </ng-template>

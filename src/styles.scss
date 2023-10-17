@@ -16,6 +16,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.card {
+  overflow-x: auto;
+}
+
+.card-body {
+  min-width: 0;
+  min-height: 0;
+}
+
 // .invalid-matToolTip {
 //   color: white;
 //   background-color: rgba(255, 0, 0, 1);

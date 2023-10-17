@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ChartComponent, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexDataLabels, ApexTitleSubtitle, ApexStroke, ApexGrid } from "ng-apexcharts";
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 export type LineChartOptions = {
   series: ApexAxisChartSeries;
@@ -31,19 +32,11 @@ export interface TableRow {
   future_value: number;
 }
 
-export const time_conversions: { [key: string]: number } = {
-  year_year: 1,
-  year_month: 12,
-  year_week: 52.1429,
-  year_day: 365,
-  month_year: 0.0833334,
-  month_month: 1,
-  month_week: 4.34524,
-  month_day: 30.4167,
-  week_year: 0.0191781,
-  week_month: 0.230137,
-  week_week: 1,
-  week_day: 7,
+export const time_in_days: { [key: string]: number } = {
+  year: 365,
+  month: 30,
+  week: 7,
+  day: 1,
 }
 
 @Component({
@@ -53,6 +46,8 @@ export const time_conversions: { [key: string]: number } = {
 })
 export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild('paginator') paginator?: MatPaginator;
+
+  MQ = null;
 
   lineChartOptions?: LineChartOptions;
   pieChartOptions?: PieChartOptions;
@@ -66,17 +61,24 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
   columns_to_show: string[] = ["period", "interest", "future_value"];
   frequencies: string[] = [];
 
+  fill_function?: (capital: number, periods: number, fixed_interest: number) => TableRow[];
 
   constructor(
     public translate: TranslateService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
   ){
+    route.data.pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.fill_function = data['fill_function'];
+    });
+
     this.form_group = fb.group({
       capital: [''],
       interest_rate: [''],
       interest_period: [''],
       periods: [''],
       frequency: [''],
+      fixed_interest: [{ value: '', disabled: true }]
     });
 
     this.table_data = new MatTableDataSource<TableRow>();
@@ -113,43 +115,86 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
       return;
     }
 
-    let data: TableRow[] = [];
     let capital: number = this.form_group.get('capital')?.value;
-    let interest_rate: number = this.form_group.get('interest_rate')?.value / 100;
+    let interest_rate: number = this.form_group.get('interest_rate')?.value;
     let interest_period: string = this.form_group.get('interest_period')?.value;
     let periods: number = this.form_group.get('periods')?.value;
-    let frequency: string = this.form_group.get('frecuency')?.value;
+    let frequency: string = this.form_group.get('frequency')?.value;
 
-    for (let i = 0; i <= periods; i++){
-      let row: TableRow = {
-        period: i,
-        interest: i * interest_rate * capital,
-        future_value: (1 + (i * interest_rate)) * capital, 
-      }
-      data.push(row);
+    let interest_period_in_days = time_in_days[interest_period];
+    let frequency_in_days = time_in_days[frequency];
+    
+    let time_conversion: number;
+    let fixed_interest: number;
+
+    if(interest_period_in_days > frequency_in_days) { 
+      time_conversion = Math.floor(interest_period_in_days / frequency_in_days);
+      fixed_interest = interest_rate / time_conversion;
     }
+    else {
+      time_conversion = Math.floor(frequency_in_days / interest_period_in_days);
+      fixed_interest = interest_rate * time_conversion;
+    }
+
+    this.form_group.get('fixed_interest')?.setValue(fixed_interest);
+    fixed_interest /= 100;
+
+    // console.log({
+    //   interest_period_days: time_in_days[interest_period],
+    //   frequency_days: time_in_days[frequency],
+    //   conversion_rate: time_conversion
+    // });
+
+    let data: TableRow[] = [];
+
+    if(this.fill_function)
+      data = this.fill_function(capital, periods, fixed_interest);
+
+    // for (let i = 0; i <= periods; i++){
+    //   let row: TableRow = {
+    //     period: i,
+    //     interest: (i * fixed_interest * capital),
+    //     future_value: ((1 + (i * fixed_interest)) * capital), 
+    //   }
+    //   data.push(row);
+    // }
 
     this.updateTable(data);
     this.updateCharts();
   }
 
-  getFrecuencies = (): string[] => {
+  randomFill = (): void => {
+    let time_units = Object.keys(time_in_days);
+    this.form_group.get('capital')?.setValue(8000 + (Math.random() * 10000));
+    this.form_group.get('interest_rate')?.setValue(5 + (Math.random() * 15));
+    this.form_group.get('interest_period')?.setValue(time_units[Math.floor(Math.random() * time_units.length)]);
+    this.form_group.get('periods')?.setValue(1 + Math.floor(Math.random() * 40));
+    this.form_group.get('frequency')?.setValue(time_units[Math.floor(Math.random() * time_units.length)]);
+  }
+
+  getFrecuencies = (): any[] => {
     let raw = this.translate.instant('FREQUENCIES');
-    let frequencies: string[] = [];
+    let frequencies: { [key: string]: string }[] = [];
     
     for(let f in raw){
-      frequencies.push(raw[f]);
+      frequencies.push({
+        label: raw[f],
+        translate_key: `FREQUENCIES.${f}`,
+        value: f
+      });
     }
 
     return frequencies;
   }
   
   setDefaultFormValues = () => {
-    this.translate.get(['FREQUENCIES.ANNUALLY', 'FREQUENCIES.MONTHLY']).subscribe((data) => {
-      data = Object.values(data) as Array<string>;
-      this.form_group.get('interest_period')?.setValue(data[0]);
-      this.form_group.get('frequency')?.setValue(data[1]);
-    });
+    // this.translate.get(['FREQUENCIES.ANNUALLY', 'FREQUENCIES.MONTHLY']).subscribe((data) => {
+    //   data = Object.values(data) as Array<string>;
+    //   this.form_group.get('interest_period')?.setValue(data[0]);
+    //   this.form_group.get('frequency')?.setValue(data[1]);
+    // });
+    this.form_group.get('interest_period')?.setValue('year');
+    this.form_group.get('frequency')?.setValue('month');
   }
 
   updateTable = (data: TableRow[]) => {
@@ -226,4 +271,34 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
       labels: [this.labels?.['CAPITAL'] || '', this.labels?.['INTEREST'] || ''],
     }
   }
+
+  static simple_interest_latex = "C_{f} = C_{i}\left(1 + \frac{i}{100}\right)t";
+  
+  static simple_interest_fill = (capital: number, periods: number, fixed_interest: number): TableRow[] => {
+    let data:TableRow[] = [];
+    for (let i = 0; i <= periods; i++){
+      let row: TableRow = {
+        period: i,
+        interest: capital * (i * fixed_interest),
+        future_value: capital * (1 + (i * fixed_interest)), 
+      }
+      data.push(row);
+    }
+    return data;
+  };
+
+  static compound_interest_latex = "C_{f} = C_{i} (1 + i)^{t}";
+
+  static compound_interest_fill = (capital: number, periods: number, fixed_interest: number): TableRow[] => {
+    let data:TableRow[] = [];
+    for (let i = 0; i <= periods; i++){
+      let row: TableRow = {
+        period: i,
+        interest: (capital * Math.pow(1 + fixed_interest, i)) - capital,
+        future_value: capital * Math.pow(1 + fixed_interest, i), 
+      }
+      data.push(row);
+    }
+    return data;
+  };
 }

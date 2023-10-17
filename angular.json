@@ -32,10 +32,14 @@
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles.scss",
+              "node_modules/mathquill/build/mathquill.css"
             ],
             "scripts": [
-              "node_modules/apexcharts/dist/apexcharts.min.js"
+              "node_modules/apexcharts/dist/apexcharts.min.js",
+              "node_modules/mathquill/build/mathquill.js",
+              "https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"
             ]
           },
           "configurations": {

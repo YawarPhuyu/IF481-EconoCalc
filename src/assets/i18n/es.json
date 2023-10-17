@@ -35,10 +35,10 @@
     }
   },
   "FREQUENCIES": {
-    "ANNUALLY": "anual",
-    "MONTHLY": "mensual",
-    "WEEKLY": "semanal",
-    "DAILY": "diario"
+    "year": "anual",
+    "month": "mensual",
+    "week": "semanal",
+    "day": "diario"
   },
   "MESSAGES": {
     "DATALESS_TABLE": "Esta tabla aún no tiene datos",
@@ -56,14 +56,16 @@
     "COMPOUND_INTEREST": "Interés compuesto",
     "DATA": "Datos",
     "DATA_TABLE": "Tabla de datos",
+    "FIXED_INTEREST": "Interés modulado",
     "FREQUENCIES": "Frecuencias",
     "FREQUENCY": "Frecuencia",
     "FUTURE_VALUE": "Valor futuro",
     "INTEREST": "Interés",
     "INTEREST_PERIOD": "Período de interés",
     "INTEREST_RATE": "Tasa de interés",
-    "PERIOD": "Período",
-    "PERIODS": "Períodos",
+    "PERIOD": "Periodo",
+    "PERIODS": "Periodos",
+    "RANDOM_FILL": "Aleatorizar",
     "SIMPLE_INTEREST": "Interés simple",
     "VALUE_OVER_TIME": "Valor a lo largo del tiempo"
   }
