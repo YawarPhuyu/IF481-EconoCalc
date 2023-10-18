@@ -8,6 +8,8 @@
         <form class="card-body d-flex flex-column align-items-center justify-content-between"
           [formGroup]="form_group"
         >
+          <div #mathField id="math-field" class="fw-bold fs-4 mb-4">{{ formula }}</div>
+
           <app-input-field
             formControlName="capital"
             [required]="true"

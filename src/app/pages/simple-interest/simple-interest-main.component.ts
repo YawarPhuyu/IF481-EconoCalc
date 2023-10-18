@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, take } from 'rxjs';
 
 import { ChartComponent, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexDataLabels, ApexTitleSubtitle, ApexStroke, ApexGrid } from "ng-apexcharts";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 export type LineChartOptions = {
   series: ApexAxisChartSeries;
@@ -46,8 +46,9 @@ export const time_in_days: { [key: string]: number } = {
 })
 export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild('paginator') paginator?: MatPaginator;
+  @ViewChild('mathField') math_field_ref?: any;
 
-  MQ = null;
+  MQ: any = null;
 
   lineChartOptions?: LineChartOptions;
   pieChartOptions?: PieChartOptions;
@@ -62,14 +63,16 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
   frequencies: string[] = [];
 
   fill_function?: (capital: number, periods: number, fixed_interest: number) => TableRow[];
+  formula?: string;
 
   constructor(
     public translate: TranslateService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
   ){
-    route.data.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    route.data.pipe(take(1)).subscribe(data => {
       this.fill_function = data['fill_function'];
+      this.formula = data['formula'];
     });
 
     this.form_group = fb.group({
@@ -103,11 +106,16 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
 
   ngAfterViewInit(): void {
     this.table_data.paginator = this.paginator || null;
+
+    this.MQ = (window as any).MathQuill.getInterface(2);
+    this.MQ.StaticMath(this.math_field_ref.nativeElement);
+    console.log(this.math_field_ref);
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    console.log('component have been destroyed');
   }
 
   calculateTable = () => {
@@ -139,25 +147,10 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
     this.form_group.get('fixed_interest')?.setValue(fixed_interest);
     fixed_interest /= 100;
 
-    // console.log({
-    //   interest_period_days: time_in_days[interest_period],
-    //   frequency_days: time_in_days[frequency],
-    //   conversion_rate: time_conversion
-    // });
-
     let data: TableRow[] = [];
 
     if(this.fill_function)
       data = this.fill_function(capital, periods, fixed_interest);
-
-    // for (let i = 0; i <= periods; i++){
-    //   let row: TableRow = {
-    //     period: i,
-    //     interest: (i * fixed_interest * capital),
-    //     future_value: ((1 + (i * fixed_interest)) * capital), 
-    //   }
-    //   data.push(row);
-    // }
 
     this.updateTable(data);
     this.updateCharts();
@@ -188,11 +181,6 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
   }
   
   setDefaultFormValues = () => {
-    // this.translate.get(['FREQUENCIES.ANNUALLY', 'FREQUENCIES.MONTHLY']).subscribe((data) => {
-    //   data = Object.values(data) as Array<string>;
-    //   this.form_group.get('interest_period')?.setValue(data[0]);
-    //   this.form_group.get('frequency')?.setValue(data[1]);
-    // });
     this.form_group.get('interest_period')?.setValue('year');
     this.form_group.get('frequency')?.setValue('month');
   }
@@ -272,7 +260,7 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  static simple_interest_latex = "C_{f} = C_{i}\left(1 + \frac{i}{100}\right)t";
+  static simple_interest_latex = "C_{f} = C_{i}\\left(1 + \\frac{i}{100}\\right)t";
   
   static simple_interest_fill = (capital: number, periods: number, fixed_interest: number): TableRow[] => {
     let data:TableRow[] = [];

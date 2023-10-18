@@ -13,12 +13,18 @@ const routes: Routes = [
   {
     path: 'simple-interest',
     component: SimpleInterestMainComponent,
-    data: { fill_function: SimpleInterestMainComponent.simple_interest_fill },
+    data: {
+      fill_function: SimpleInterestMainComponent.simple_interest_fill,
+      formula: SimpleInterestMainComponent.simple_interest_latex
+    },
   },
   {
     path: 'compound-interest',
     component: SimpleInterestMainComponent,
-    data: { fill_function: SimpleInterestMainComponent.compound_interest_fill },
+    data: { 
+      fill_function: SimpleInterestMainComponent.compound_interest_fill,
+      formula: SimpleInterestMainComponent.compound_interest_latex
+    },
   },
 ];
 
