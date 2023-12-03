@@ -23,9 +23,6 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 
-// Apexcharts
-import { NgApexchartsModule } from 'ng-apexcharts';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -70,9 +67,6 @@ import { CompoundInterestComponent } from './components/compound-interest/compou
             deps: [HttpClient]
         }
     }),
-
-    //ApexCharts
-    NgApexchartsModule,
 
     BrowserModule,
     FormsModule,

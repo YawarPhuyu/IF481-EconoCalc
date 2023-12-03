@@ -1,30 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil, take } from 'rxjs';
 
-import { ChartComponent, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexDataLabels, ApexTitleSubtitle, ApexStroke, ApexGrid } from "ng-apexcharts";
 import { ActivatedRoute } from '@angular/router';
-
-export type LineChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
-
-export type PieChartOptions = {
-  title: ApexTitleSubtitle;
-  chart: ApexChart;
-  series: ApexNonAxisChartSeries;
-  labels: string[];
-}
 
 export interface TableRow {
   period: number;
@@ -47,12 +28,18 @@ export const time_in_days: { [key: string]: number } = {
 export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild('paginator') paginator?: MatPaginator;
   @ViewChild('mathField') math_field_ref?: any;
+  @ViewChild('lineChart') line_chart_container?: ElementRef;
+  @ViewChild('pieChart') pie_chart_container?: ElementRef;
 
   MQ: any = null;
+  ApexCharts: any = null;
 
-  lineChartOptions?: LineChartOptions;
-  pieChartOptions?: PieChartOptions;
+  lineChartOptions?: object;
+  pieChartOptions?: object;
   labels?: { [key: string]: string } = {};
+
+  line_chart_object?: any;
+  pie_chart_object?: any;
 
   destroy$: Subject<void> = new Subject<void>();
 
@@ -109,7 +96,8 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
 
     this.MQ = (window as any).MathQuill.getInterface(2);
     this.MQ.StaticMath(this.math_field_ref.nativeElement);
-    console.log(this.math_field_ref);
+
+    this.ApexCharts = (window as any).ApexCharts;
   }
 
   ngOnDestroy(): void {
@@ -257,7 +245,28 @@ export class SimpleInterestMainComponent implements OnInit, AfterViewInit, OnDes
         this.table_data.data[last_index].interest
       ],
       labels: [this.labels?.['CAPITAL'] || '', this.labels?.['INTEREST'] || ''],
+      tooltip: {
+        y: {
+          formatter: (value: any) => {
+            return (value as number).toFixed(2);
+          }
+        }
+      },
     }
+
+    if(!(this.line_chart_object && this.pie_chart_object))
+    {
+      this.line_chart_object = new this.ApexCharts(this.line_chart_container?.nativeElement, this.lineChartOptions);
+      this.pie_chart_object = new this.ApexCharts(this.pie_chart_container?.nativeElement, this.pieChartOptions);
+      this.line_chart_object.render();
+      this.pie_chart_object.render();
+    }
+    else
+    {
+      this.line_chart_object.updateOptions(this.lineChartOptions, true, true, true);
+      this.pie_chart_object.updateOptions(this.pieChartOptions, true, true, true);
+    }
+
   }
 
   static simple_interest_latex = "C_{f} = C_{i}\\left(1 + \\frac{i}{100}\\right)t";

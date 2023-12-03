@@ -84,22 +84,14 @@
       <div class="card rounded shadow">
         <div class="card-header fs-6 fw-bold">{{ 'LABELS.CHARTS.LINE' | translate}}</div>
         <div class="card-body">
-          <apx-chart
-            [series]="lineChartOptions.series"
-            [chart]="lineChartOptions.chart"
-            [xaxis]="lineChartOptions.xaxis"
-            [yaxis]="lineChartOptions.yaxis"
-            [dataLabels]="lineChartOptions.dataLabels"
-            [grid]="lineChartOptions.grid"
-            [stroke]="lineChartOptions.stroke"
-            [title]="lineChartOptions.title"
-            *ngIf="lineChartOptions; else noLinearChart;"
-          ></apx-chart>
-          <ng-template #noLinearChart>
+          <div #lineChart></div>
+          <ng-container
+            *ngIf="!line_chart_object"
+          >
             <div class="fw-bold text-center">
               {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.VALUE_OVER_TIME' | translate}}
             </div>
-          </ng-template>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -108,18 +100,14 @@
       <div class="card rounded shadow">
         <div class="card-header fs-6 fw-bold">{{ 'LABELS.CHARTS.PIE' | translate}}</div>
         <div class="card-body">
-          <apx-chart
-            [title]="pieChartOptions.title"
-            [chart]="pieChartOptions.chart"
-            [series]="pieChartOptions.series"
-            [labels]="pieChartOptions.labels"
-            *ngIf="pieChartOptions; else noPieChart;"
-          ></apx-chart>
-          <ng-template #noPieChart>
+          <div #pieChart></div>
+          <ng-container
+            *ngIf="!pie_chart_object"
+          >
             <div class="fw-bold text-center">
               {{ 'MESSAGES.DATALESS_CHART' | translate }}: {{ 'LABELS.CAPITAL_VS_INTEREST' | translate }}
             </div>
-          </ng-template>
+          </ng-container>
         </div>
       </div>
     </div>
