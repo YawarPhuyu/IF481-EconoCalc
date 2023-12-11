@@ -22,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {PlatformLocation} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -64,7 +65,7 @@ import { CompoundInterestComponent } from './components/compound-interest/compou
         loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
+            deps: [HttpClient, PlatformLocation]
         }
     }),
 
@@ -79,6 +80,13 @@ import { CompoundInterestComponent } from './components/compound-interest/compou
 })
 export class AppModule { }
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(http: HttpClient, pl: PlatformLocation): TranslateHttpLoader {
+  const base_href = pl.getBaseHrefFromDOM();
+
+  console.log("base_href");
+  console.log(base_href);
+
+  const prefix = base_href?? "/";
+  
+  return new TranslateHttpLoader(http, `${prefix}assets/i18n/`, ".json");
 }

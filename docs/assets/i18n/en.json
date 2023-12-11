@@ -1,0 +1,72 @@
+{
+  "CLASS_VALIDATION": {
+    "BOOLEAN": {
+      "BAD_FORMAT": "The input doesn't match a boolean(true or false)"
+    },
+    "DICTIONARY": {
+      "BAD_NAME": "The name contains forbidden characters",
+      "DUPLICATED_NAME": "This dictionary name already exist!"
+    },
+    "GENERAL": {
+      "FIELD_REQUIRED": "This fiels is required",
+      "INVALID_FIELDS_EXIST": "Some fields are invalid"
+    },
+    "INTEGER_NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a integer number format",
+      "DECIMALS": "Integers cannot have decimals"
+    },
+    "NATURAL_NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a natural number format",
+      "DECIMALS": "Natural numbers cannot have decimals",
+      "NEGATIVE": "Natural numbers cannot take negative values",
+      "ZERO": "The value cannot be zero"
+    },
+    "NUMBER": {
+      "BAD_FORMAT": "The input doesn't match a number format",
+      "START_WITH_PLUS_SIGN": "Ignore the '+' sign for positive numbers",
+      "TOO_MUCH_DECIMALS": "There are too much decimals",
+      "UNNECESSARY_ZEROS": "Avoid unnecessary zeros"
+    },
+    "RULE_OBJECT_TYPE": {
+      "INVALID_TYPE": "This is not a valid RuleObjectType"
+    },
+    "STRING": {
+      "BAD_FORMAT": "This string has forbiden characters!"
+    }
+  },
+  "FREQUENCIES": {
+    "year": "annually",
+    "month": "monthly",
+    "week": "weekly",
+    "day": "daily"
+  },
+  "MESSAGES": {
+    "DATALESS_TABLE": "This table has no data yet",
+    "DATALESS_CHART": "There is no data to render this chart"
+  },
+  "LABELS": {
+    "CAPITAL": "Capital",
+    "CALCULATE": "Calculate",
+    "CAPITAL_VS_INTEREST": "Capital vs interest",
+    "CHARTS": {
+      "DONUT": "Donut chart",
+      "LINE": "Line chart",
+      "PIE": "Pie chart"
+    },
+    "COMPOUND_INTEREST": "Compound interest",
+    "DATA": "Data",
+    "DATA_TABLE": "Data table",
+    "FIXED_INTEREST": "Fixed interest",
+    "FREQUENCIES": "Frequencies",
+    "FREQUENCY": "Frequency",
+    "FUTURE_VALUE": "Future value",
+    "INTEREST": "Interest",
+    "INTEREST_PERIOD": "Interest period",
+    "INTEREST_RATE": "Interest rate",
+    "PERIOD": "Period",
+    "PERIODS": "Periods",
+    "RANDOM_FILL": "Random fill",
+    "SIMPLE_INTEREST": "Simple interest",
+    "VALUE_OVER_TIME": "Value over time"
+  }
+}
